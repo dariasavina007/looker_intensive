@@ -123,25 +123,11 @@ view: f_lineitems {
     label: "Order Count"
   }
 
-  measure: total_sale_price {
-    type: number
-    sql: ${l_totalprice} * (1 + ${l_tax}) ;;
-    value_format_name: usd
-    label: "Total Sale Price"
-  }
-
   measure: total_sales_from_items_sold {
     type: sum
     sql: ${l_totalprice} * (1 + ${l_tax}) ;;
     value_format_name: usd
     label: "Total sales from items sold"
-  }
-
-  measure: average_sale_price {
-    type: number
-    sql: ROUND(DIVIDE(${total_sale_price}, ${l_quantity}), 2) ;;
-    value_format_name: usd
-    label: "Average Sale Price"
   }
 
   measure: average_sale_price_from_items_sold {
@@ -151,12 +137,6 @@ view: f_lineitems {
     label: "Average sale price of items sold"
   }
 
-  measure: cumulative_total_sales {
-    type: running_total
-    sql: ${total_sale_price} ;;
-    value_format_name: usd
-    label: "Cumulative Total Sales"
-  }
 
   measure: cumulative_total_sales_from_items_sold {
     type: running_total
@@ -170,5 +150,84 @@ view: f_lineitems {
     sql: ${l_quantity} ;;
     label: "Total Quantity Sold"
   }
+  measure: total_sales_price_air {
+    label: "lineitems_total_sales_price_air"
+    description: "Total sales of items shipped by air"
+    type: sum
+    sql: ${l_totalprice};;
+    filters: [l_shipmode: "AIR"]
+    value_format_name: usd
+  }
 
+  measure: total_sales_price_russia {
+    label: "lineitems_total_sales_price_russia"
+    description: "Total sales by customers from Russia"
+    type: sum
+    sql: ${l_totalprice};;
+    filters: [d_supplier.s_nation: "RUSSIA"]
+    value_format_name: usd
+  }
+
+  measure: total_gross_revenue {
+    label: "lineitems_total_gross_revenue"
+    description: "Total price of completed sales"
+    type: sum
+    sql: ${l_totalprice};;
+    filters: [l_orderstatus:  "F"]
+    value_format_name: usd
+  }
+
+  measure: total_cost {
+    label: "lineitems_total_cost"
+    description: "Total cost"
+    type: sum
+    sql: ${l_supplycost};;
+    value_format_name: usd
+  }
+
+  measure: total_gross_margin_amount {
+    label: "lineitems_gross_margin_amount"
+    description: "Total Gross Revenue – Total Cost"
+    type: number
+    sql: ${total_gross_revenue} - ${total_cost};;
+    value_format_name: usd
+  }
+
+  measure: gross_margin_percentage {
+    label: "lineitems_gross_margin_percentage"
+    description: "Total Gross Margin Amount / Total Gross Revenue"
+    sql: ${total_gross_margin_amount} / NULLIF(${total_gross_revenue}, 0);;
+    value_format_name: percent_2
+  }
+
+  measure: number_of_item_returned {
+    label: "lineitems_return_items_amount"
+    description: "Number of items that were returned by dissatisfied customers"
+    type: sum
+    sql: ${l_quantity};;
+    filters: [l_returnflag: "R"]
+    value_format_name: decimal_0
+  }
+
+  measure: number_of_item_sold {
+    label: "lineitems_sold_items_amount"
+    description: "Number of items that were sold"
+    type: sum
+    sql: ${l_quantity};;
+    value_format_name: decimal_0
+  }
+
+  measure: item_return_rate {
+    label: "lineitems_item_return_rate"
+    description: "Number Of Items Returned / Total Number Of Items Sold"
+    sql: ${number_of_item_returned} / ${number_of_item_sold};;
+    value_format_name: decimal_2
+  }
+
+  measure: average_spend_per_customer{
+    label: "lineitems_avg_spend_per_customer"
+    description: "Total Sale Price / Total Number of Customers"
+    sql: ${total_sales_from_items_sold} / ${d_customer.count};;
+    value_format_name: usd
+  }
 }
