@@ -151,7 +151,7 @@ view: f_lineitems {
     label: "Total Quantity Sold"
   }
   measure: total_sales_price_air {
-    label: "lineitems_total_sales_price_air"
+    label: "Total Sale Price Shipped By Air"
     description: "Total sales of items shipped by air"
     type: sum
     sql: ${l_totalprice};;
@@ -160,7 +160,7 @@ view: f_lineitems {
   }
 
   measure: total_sales_price_russia {
-    label: "lineitems_total_sales_price_russia"
+    label: "Total Russia Sales"
     description: "Total sales by customers from Russia"
     type: sum
     sql: ${l_totalprice};;
@@ -169,7 +169,7 @@ view: f_lineitems {
   }
 
   measure: total_gross_revenue {
-    label: "lineitems_total_gross_revenue"
+    label: "Total Gross Revenue"
     description: "Total price of completed sales"
     type: sum
     sql: ${l_totalprice};;
@@ -178,7 +178,7 @@ view: f_lineitems {
   }
 
   measure: total_cost {
-    label: "lineitems_total_cost"
+    label: "Total Cost"
     description: "Total cost"
     type: sum
     sql: ${l_supplycost};;
@@ -186,7 +186,7 @@ view: f_lineitems {
   }
 
   measure: total_gross_margin_amount {
-    label: "lineitems_gross_margin_amount"
+    label: "Total Gross Margin Amount"
     description: "Total Gross Revenue – Total Cost"
     type: number
     sql: ${total_gross_revenue} - ${total_cost};;
@@ -194,14 +194,14 @@ view: f_lineitems {
   }
 
   measure: gross_margin_percentage {
-    label: "lineitems_gross_margin_percentage"
+    label: "Goss Margin Percentage"
     description: "Total Gross Margin Amount / Total Gross Revenue"
     sql: ${total_gross_margin_amount} / NULLIF(${total_gross_revenue}, 0);;
     value_format_name: percent_2
   }
 
   measure: number_of_item_returned {
-    label: "lineitems_return_items_amount"
+    label: "Number of Items Returned"
     description: "Number of items that were returned by dissatisfied customers"
     type: sum
     sql: ${l_quantity};;
@@ -210,7 +210,7 @@ view: f_lineitems {
   }
 
   measure: number_of_item_sold {
-    label: "lineitems_sold_items_amount"
+    label: "Total Number of Items Sold"
     description: "Number of items that were sold"
     type: sum
     sql: ${l_quantity};;
@@ -218,14 +218,14 @@ view: f_lineitems {
   }
 
   measure: item_return_rate {
-    label: "lineitems_item_return_rate"
+    label: "Item Return Rate"
     description: "Number Of Items Returned / Total Number Of Items Sold"
     sql: ${number_of_item_returned} / ${number_of_item_sold};;
     value_format_name: decimal_2
   }
 
   measure: average_spend_per_customer{
-    label: "lineitems_avg_spend_per_customer"
+    label: "Average Spend per Customer"
     description: "Total Sale Price / Total Number of Customers"
     sql: ${total_sales_from_items_sold} / ${d_customer.count};;
     value_format_name: usd

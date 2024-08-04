@@ -27,6 +27,10 @@ explore: d_supplier {
 }
 
 explore: f_lineitems {
+  label: "Summary Dashboard"
+  description: "Explore for Summary Dashboard"
+  #hidden: yes
+
   join: d_customer {
     type: left_outer
     sql_on: ${f_lineitems.l_custkey} = ${d_customer.c_custkey} ;;
