@@ -39,10 +39,19 @@ view: d_supplier {
     sql: ${TABLE}."S_ADDRESS" ;;
     label: "Address"
   }
-  dimension: s_name {
+  dimension: Name_url {
     type: string
-    sql: ${TABLE}."S_NAME" ;;
+    sql: concat("https://www.google.com/search?q=",{TABLE}."S_NAME") ;;
+  }
+
+  dimension: s_name {
     label: "Name"
+    type: string
+    link: {
+      label: "Link to the supplier"
+      url: "https://www.google.com/search?q={{d_supplier.s_name._value}}"
+      icon_url:"https://cdn-icons-png.flaticon.com/512/4866/4866608.png"}
+    sql: ${TABLE}."S_NAME" ;;
   }
   dimension: s_nation {
     type: string

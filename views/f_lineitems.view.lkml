@@ -91,6 +91,7 @@ view: f_lineitems {
     type: string
     sql: ${TABLE}."L_SHIPMODE" ;;
     label: "Shiping Mode"
+    drill_fields: [l_shipmode, d_supplier.cohort_of_suppliers_by_accbal, d_supplier.s_region]
   }
   dimension: l_shippriority {
     type: number
@@ -229,5 +230,12 @@ view: f_lineitems {
     description: "Total Sale Price / Total Number of Customers"
     sql: ${total_sales_from_items_sold} / ${d_customer.count};;
     value_format_name: usd
+  }
+  measure: total_revenue_percentage {
+    label: "Total Revenue %"
+    description: "Contribution to total revenue for each supplier."
+    type: number
+    sql: ${total_gross_revenue} / SUM(${total_gross_revenue}) OVER ();;
+    value_format_name: percent_2
   }
 }
