@@ -160,12 +160,12 @@ view: f_lineitems {
     value_format_name: usd
   }
 
-  measure: total_sales_price_russia {
-    label: "Total Russia Sales"
-    description: "Total sales by customers from Russia"
+  measure: total_sales_price_united_states {
+    label: "Total UNITED STATES Sales"
+    description: "Total sales by customers from UNITED STATES"
     type: sum
     sql: ${l_totalprice};;
-    filters: [d_supplier.s_nation: "RUSSIA"]
+    filters: [d_supplier.s_nation: "UNITED STATES"]
     value_format_name: usd
   }
 
