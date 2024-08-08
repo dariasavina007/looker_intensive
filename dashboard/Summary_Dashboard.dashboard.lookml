@@ -4,7 +4,7 @@
   layout: newspaper
   preferred_viewer: dashboards-next
   description: ''
-  preferred_slug: wHbyLbSJpiPIXIR4dROlTG
+  preferred_slug: rNF2NFKcNE7J7qf5kbUbwo
   elements:
   - title: " (Copy)"
     name: " (Copy)"
@@ -357,7 +357,6 @@
     explore: f_lineitems
     type: looker_pie
     fields: [f_lineitems.total_gross_revenue, d_supplier.cohort_of_suppliers_by_accbal]
-    fill_fields: [d_supplier.cohort_of_suppliers_by_accbal]
     filters:
       d_supplier.cohort_of_suppliers_by_accbal: "-Unknown"
       d_dates.year: '1995'
@@ -640,12 +639,12 @@
     model: d.savina_intensive_13
     explore: f_lineitems
     type: looker_line
-    fields: [f_lineitems.number_of_item_sold, d_dates.month_name, d_dates.date_val_day_of_month]
-    pivots: [d_dates.month_name]
-    fill_fields: [d_dates.date_val_day_of_month]
+    fields: [f_lineitems.number_of_item_sold, d_dates.date_val_month, d_dates.date_val_day_of_month]
+    pivots: [d_dates.date_val_month]
+    fill_fields: [d_dates.date_val_day_of_month, d_dates.date_val_month]
     filters:
       d_dates.date_val_date: 1994/12/01 to 1995/02/01
-    sorts: [d_dates.month_name, d_dates.date_val_day_of_month desc]
+    sorts: [d_dates.date_val_month desc, f_lineitems.number_of_item_sold desc 0]
     limit: 500
     column_limit: 50
     x_axis_gridlines: false

@@ -6,34 +6,16 @@ view: d_supplier {
     sql: ${TABLE}."S_ACCTBAL" ;;
     label: "Account Balance"
   }
+
   dimension: cohort_of_suppliers_by_accbal {
     label: "Supplier Account Balance Range"
     description: "Supplier's account balance in range of"
-    type: string
-    case: {
-      when: {
-        sql: ${s_acctbal} <= 0 ;;
-        label: "<= 0"
-      }
-      when: {
-        sql: ${s_acctbal} >= 1 AND ${s_acctbal} <= 3000 ;;
-        label: "1 - 3000"
-      }
-      when: {
-        sql: ${s_acctbal} >= 3001 AND ${s_acctbal} <= 5000 ;;
-        label: "3001 - 5000"
-      }
-      when: {
-        sql: ${s_acctbal} >= 5001 AND ${s_acctbal} <= 7000 ;;
-        label: "5001 - 7000"
-      }
-      when: {
-        sql: ${s_acctbal} >= 7001 ;;
-        label: "> 7000"
-      }
-      else: "Unknown"
-    }
+    type: tier
+    tiers: [1, 3001, 5001, 7001]
+    style: integer
+    sql: ${s_acctbal} ;;
   }
+
   dimension: s_address {
     type: string
     sql: ${TABLE}."S_ADDRESS" ;;
