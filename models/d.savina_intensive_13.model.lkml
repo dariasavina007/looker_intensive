@@ -10,21 +10,21 @@ datagroup: ds_epam_default_datagroup {
 
 persist_with: ds_epam_default_datagroup
 
-explore: d_customer {
-  hidden: yes
-}
+# explore: d_customer {
+#   hidden: yes
+# }
 
-explore: d_dates {
-  hidden: yes
-}
+# explore: d_dates {
+#   hidden: yes
+# }
 
-explore: d_part {
-  hidden: yes
-}
+# explore: d_part {
+#   hidden: yes
+# }
 
-explore: d_supplier {
-  hidden: yes
-}
+# explore: d_supplier {
+#   hidden: yes
+# }
 
 explore: f_lineitems {
   label: "Summary Dashboard"
@@ -55,3 +55,23 @@ explore: f_lineitems {
     relationship: many_to_one
   }
 }
+
+
+
+
+# explore: order_items_pdt {
+#   view_name: order_items_pdt
+#   join: d_part {
+#     type: left_outer
+#     sql_on: ${order_items_pdt.l_partkey} = ${d_part.p_partkey} ;;
+#     relationship: many_to_one
+#   }
+  # aggregate_table: order_items_pdt_aggregate {
+  #   materialization: {
+  #     datagroup_trigger: my_datagroup
+  #   }
+  #   query: {
+  #     dimensions: [order_items_pdt.l_orderkey]
+  #     measures: [order_items_pdt.total_sales_from_items_sold, order_items_pdt.total_quantity_sold]
+  #   }
+  # }

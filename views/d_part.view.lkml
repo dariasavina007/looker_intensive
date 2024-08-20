@@ -18,7 +18,7 @@ view: d_part {
   }
   dimension: p_partkey {
     primary_key: yes
-    hidden: yes
+    #hidden: yes
     type: number
     sql: ${TABLE}."P_PARTKEY" ;;
   }

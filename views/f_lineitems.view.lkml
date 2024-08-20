@@ -238,4 +238,58 @@ view: f_lineitems {
     sql: ${total_gross_revenue} / SUM(${total_gross_revenue}) OVER ();;
     value_format_name: percent_2
   }
+
+  parameter: timeframe_selector {
+    type: unquoted
+    default_value: "month"
+
+    allowed_value: {
+      label: "Month"
+      value: "month"
+    }
+    allowed_value: {
+      label: "Quarter"
+      value: "quarter"
+    }
+    allowed_value: {
+      label: "Year"
+      value: "year"
+    }
+  }
+
+  dimension: dynamic_timeframe {
+    label_from_parameter: timeframe_selector
+
+    sql:
+      {% if timeframe_selector._parameter_value == "quarter" %} ${d_dates.quarter}
+      {% elsif timeframe_selector._parameter_value == "year" %} ${d_dates.year}
+      {% elsif timeframe_selector._parameter_value == "month" %} ${d_dates.month_num}
+      {% endif %}
+      ;;
+  }
+
+
+  dimension:dynamic_timeframe_title {
+    label: "Chart Title"
+    type: string
+    sql:
+     {% if timeframe_selector._parameter_value == "quarter" %} 'Quarterly'
+      {% elsif timeframe_selector._parameter_value == "year" %} 'Yearly'
+      {% elsif timeframe_selector._parameter_value == "month" %} 'Monthly'
+      {% endif %}
+      ;;
+  }
+  measure:  returned_rate_group{
+    type: number
+    value_format_name: percent_2
+    sql:${item_return_rate} ;;
+    html:
+    {% if value >= 0.5 %}
+      <font color="red">{{ rendered_value }}</font>
+    {% elsif value >= 0.3  and value < 0.5%}
+      <font color ="orange">{{ rendered_value }}</fontn>
+    {% else %}
+      <font color ="green">{{ rendered_value }}</font>
+    {% endif %} ;;
+  }
 }

@@ -36,7 +36,13 @@ view: d_customer {
     type: string
     sql: ${TABLE}."C_REGION" ;;
     label: "Region"
+
+    link: {
+      label: "View by Region"
+      url: "/dashboards/309?Region={{ value | url_encode }}"
+    }
   }
+
   measure: count {
     type: count
     drill_fields: [c_name]
